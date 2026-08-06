@@ -1,2 +1,2 @@
 # Gurobi Parameter Settings
-NoRelHeurTime 180
+NoRelHeurWork 300
