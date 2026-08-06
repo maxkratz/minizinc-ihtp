@@ -24,7 +24,7 @@ fi
 
 modelFile="./model/v4/AllConstraints.mzn"
 gurobiParam="./model/Gurobi.prm"
-miniZincDir="/opt/minizinc/MiniZincIDE-2.9.5-bundle-linux-x86_64"
+miniZincDir="/opt/minizinc/MiniZincIDE-2.10.0-bundle-linux-x86_64"
 
 TOTAL_START=$SECONDS
 
