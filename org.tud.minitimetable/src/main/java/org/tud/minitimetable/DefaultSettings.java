@@ -6,12 +6,12 @@ import org.tud.minitimetable.extern.solver.ProcessLogger.DefaultFileLog;
 public class DefaultSettings {
 
 	/**
-	 * 10 Minutes
+	 * 1 hour
 	 */
-	public static final Long DEFAULT_TIME_LIMIT_IN_MS = 10l * 60l * 1000l;
+	public static final Long DEFAULT_TIME_LIMIT_IN_MS = 60l * 60l * 1000l;
 
 	/**
-	 * 4 Threads
+	 * 32 Threads
 	 */
 	public static final Integer DEFAULT_NUMBER_OF_THREADS = 32;
 
