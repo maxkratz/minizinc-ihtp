@@ -17,9 +17,9 @@ public class LocalRunner {
 	private static final Path resourceDirectory = Path.of("./", "resources").toAbsolutePath();
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v1").resolve("AllConstraints.mzn");
+//		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v1").resolve("AllConstraints.mzn");
 //		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v2").resolve("AllConstraints.mzn");
-//		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v4").resolve("AllConstraints.mzn");
+		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v4").resolve("AllConstraints.mzn");
 //		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v4.5").resolve("AllConstraints.mzn");
 		Path dataFile = resourceDirectory.resolve("input").resolve("ihtc").resolve("i01.json");
 //		Path dataFile = resourceDirectory.resolve("minizinc").resolve("data").resolve("i03.json");
