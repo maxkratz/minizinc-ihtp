@@ -67,7 +67,7 @@ public class LocalRunner {
 			reader.writeToFile(best, file);
 
 			System.out.println(String.format("Validating file '%s' with solution '%s'", dataFile, file));
-			ValidatorRunner validator = new ValidatorRunner(resourceDirectory.resolve("IHTP_Validator_Win11.exe"),
+			ValidatorRunner validator = new ValidatorRunner(resourceDirectory.resolve("IHTP_Validator"),
 					solutionFile.getParent()) {
 
 			};
