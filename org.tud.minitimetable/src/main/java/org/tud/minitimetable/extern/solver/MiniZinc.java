@@ -318,6 +318,10 @@ public class MiniZinc {
 			locator.addFolder(config.miniZincLocation);
 
 		locator.addFolder(Path.of("..", "..", "MiniZinc", "minizinc.exe"));
+		final String miniZincVersion = "2.10.0";
+		final String miniZincLinuxPath = "/opt/minizinc/MiniZincIDE-" + miniZincVersion
+				+ "-bundle-linux-x86_64/bin/minizinc";
+		locator.addFolder(Path.of(miniZincLinuxPath));
 
 		Optional<Path> location = locator.searchMiniZinc().stream().findFirst();
 		if (location.isEmpty())
