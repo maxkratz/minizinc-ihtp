@@ -34,8 +34,8 @@ public class LocalRunner {
 
 //		minizinc.getConfig().solverModelLog = new DefaultFileLog("%s-ilp.ilp", true);
 		minizinc.getConfig().logger = new MixedCodeLogger(outputFolder.resolve("log.txt"));
-		minizinc.getConfig().timeLimitMS = 25 * 60 * 1000l;
-		minizinc.getConfig().solverTimeLimitMS = 5 * 60 * 1000L;
+		minizinc.getConfig().timeLimitMS = 2 * 60 * 60 * 1000l;
+		minizinc.getConfig().solverTimeLimitMS = 1 * 60 * 60 * 1000L;
 		minizinc.getConfig().gurobiParameterFile = resourceDirectory.resolve("minizinc").resolve("Gurobi.prm");
 		minizinc.getConfig().optimizeLevel = 1;
 
