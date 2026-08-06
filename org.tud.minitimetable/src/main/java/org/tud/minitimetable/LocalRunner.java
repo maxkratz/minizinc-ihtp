@@ -21,7 +21,7 @@ public class LocalRunner {
 //		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v2").resolve("AllConstraints.mzn");
 //		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v4").resolve("AllConstraints.mzn");
 //		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v4.5").resolve("AllConstraints.mzn");
-		Path dataFile = resourceDirectory.resolve("input").resolve("ihtc").resolve("i04.json");
+		Path dataFile = resourceDirectory.resolve("input").resolve("ihtc").resolve("i01.json");
 //		Path dataFile = resourceDirectory.resolve("minizinc").resolve("data").resolve("i03.json");
 
 		String fileName = PathUtils.getFileNameWithoutExtension(dataFile);
