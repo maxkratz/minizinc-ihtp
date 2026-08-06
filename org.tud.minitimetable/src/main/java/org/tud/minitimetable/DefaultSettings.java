@@ -9,7 +9,6 @@ public class DefaultSettings {
 	 * Default total time limit: 2 hours
 	 */
 	public static final Long DEFAULT_TIME_LIMIT_IN_MS = 2l * 60l * 60l * 1000l;
-
 	/**
 	 * Default solve time limit: 1 hour
 	 */
