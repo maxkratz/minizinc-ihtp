@@ -39,7 +39,7 @@ public class CSV implements Iterable<CSV.CSVRecord> {
 	}
 
 	public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
-	public static final String DEFAULT_DELIMITER = ";";
+	public static final String DEFAULT_DELIMITER = ",";
 
 	private String[] columnHeader = new String[0];
 	private final Map<String, Integer> headerToIndex = new HashMap<>();
