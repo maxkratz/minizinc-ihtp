@@ -2,7 +2,6 @@ package org.tud.minitimetable;
 
 import static org.tud.minitimetable.DefaultLocations.getDataDirectory;
 import static org.tud.minitimetable.DefaultLocations.getIHTPValidatorFile;
-import static org.tud.minitimetable.DefaultLocations.getResourceDirectory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,8 +31,9 @@ public class LogExtractor {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Path instanceFilesForValidation = getDataDirectory();
-		Path logDirectory = getResourceDirectory().resolve("workstation").resolve("raw");
-		Path outputDirectory = getResourceDirectory().resolve("workstation").resolve("extracted");
+		Path maxPath = Path.of("/home/mkratz/next.hessenbox/fges/diss/eval/minizinc");
+		Path logDirectory = maxPath.resolve("out");
+		Path outputDirectory = maxPath.resolve("out").resolve("extracted");
 
 		LogExtractor.extractDataFromLog(instanceFilesForValidation, logDirectory, outputDirectory, "main.csv");
 	}
