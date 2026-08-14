@@ -88,9 +88,9 @@ public class LogExtractor {
 
 					if (model.original() instanceof BackendParser.ElementCount elements) {
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalConstraints, //
-								elements.columns());
-						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalVariables, //
 								elements.rows());
+						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalVariables, //
+								elements.columns());
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalCoefficients, //
 								elements.nonzeros());
 
@@ -100,9 +100,9 @@ public class LogExtractor {
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolveTime, //
 								model.presolveTime());
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedConstraints, //
-								elements.columns());
-						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedVariables, //
 								elements.rows());
+						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedVariables, //
+								elements.columns());
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedCoefficients, //
 								elements.nonzeros());
 					}
