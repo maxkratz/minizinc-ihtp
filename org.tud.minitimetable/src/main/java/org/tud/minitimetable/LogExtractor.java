@@ -2,7 +2,6 @@ package org.tud.minitimetable;
 
 import static org.tud.minitimetable.DefaultLocations.getDataDirectory;
 import static org.tud.minitimetable.DefaultLocations.getIHTPValidatorFile;
-import static org.tud.minitimetable.DefaultLocations.getResourceDirectory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,8 +31,9 @@ public class LogExtractor {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Path instanceFilesForValidation = getDataDirectory();
-		Path logDirectory = getResourceDirectory().resolve("workstation").resolve("raw");
-		Path outputDirectory = getResourceDirectory().resolve("workstation").resolve("extracted");
+		Path maxPath = Path.of("/home/mkratz/next.hessenbox/fges/diss/eval/minizinc");
+		Path logDirectory = maxPath.resolve("out");
+		Path outputDirectory = maxPath.resolve("out").resolve("extracted");
 
 		LogExtractor.extractDataFromLog(instanceFilesForValidation, logDirectory, outputDirectory, "main.csv");
 	}
@@ -45,7 +45,8 @@ public class LogExtractor {
 			Files.createDirectories(outputDirectory);
 
 		Collection<ModelSelection> selectedRuns = collectRunFolders(inputDirectory).stream() //
-				.filter(m -> 5 <= m.runId && m.runId <= 8) //
+		// used to filter for certain 'runs'
+//				.filter(m -> 5 <= m.runId && m.runId <= 8) //
 //				.filter(m -> 1 == m.runId) //
 //				.filter(m -> 20 == m.runId) //
 				.sorted() //
@@ -87,9 +88,9 @@ public class LogExtractor {
 
 					if (model.original() instanceof BackendParser.ElementCount elements) {
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalConstraints, //
-								elements.columns());
-						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalVariables, //
 								elements.rows());
+						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalVariables, //
+								elements.columns());
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.OriginalCoefficients, //
 								elements.nonzeros());
 
@@ -99,9 +100,9 @@ public class LogExtractor {
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolveTime, //
 								model.presolveTime());
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedConstraints, //
-								elements.columns());
-						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedVariables, //
 								elements.rows());
+						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedVariables, //
+								elements.columns());
 						mainCSV.setCellValue(csvRowIndex, MainCSV.Columns.PresolvedCoefficients, //
 								elements.nonzeros());
 					}

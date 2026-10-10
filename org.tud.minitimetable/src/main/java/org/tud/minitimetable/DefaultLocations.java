@@ -17,7 +17,7 @@ public class DefaultLocations {
 	}
 
 	public static Path getIHTPValidatorFile() {
-		return getResourceDirectory().resolve("IHTP_Validator_Win11.exe");
+		return getResourceDirectory().resolve("IHTP_Validator");
 	}
 
 }

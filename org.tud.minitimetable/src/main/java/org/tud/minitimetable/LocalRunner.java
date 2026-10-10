@@ -12,16 +12,19 @@ import org.tud.minitimetable.extern.validator.ValidatorRunner;
 import org.tud.minitimetable.model.util.SolutionFileReader;
 import org.tud.minitimetable.util.PathUtils;
 
+/**
+ * Used to test something 'fast', the CLI can be found here {@link Main}
+ */
 public class LocalRunner {
 
 	private static final Path resourceDirectory = Path.of("./", "resources").toAbsolutePath();
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v1").resolve("AllConstraints.mzn");
+//		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v1").resolve("AllConstraints.mzn");
 //		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v2").resolve("AllConstraints.mzn");
 //		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v4").resolve("AllConstraints.mzn");
-//		Path modelFile = resourceDirectory.resolve("minizinc").resolve("v4.5").resolve("AllConstraints.mzn");
-		Path dataFile = resourceDirectory.resolve("input").resolve("ihtc").resolve("i04.json");
+		Path modelFile = resourceDirectory.resolve("minizinc").resolve("gips").resolve("AllConstraints.mzn");
+		Path dataFile = resourceDirectory.resolve("input").resolve("ihtc").resolve("i01.json");
 //		Path dataFile = resourceDirectory.resolve("minizinc").resolve("data").resolve("i03.json");
 
 		String fileName = PathUtils.getFileNameWithoutExtension(dataFile);
@@ -34,30 +37,21 @@ public class LocalRunner {
 
 //		minizinc.getConfig().solverModelLog = new DefaultFileLog("%s-ilp.ilp", true);
 		minizinc.getConfig().logger = new MixedCodeLogger(outputFolder.resolve("log.txt"));
-		minizinc.getConfig().timeLimitMS = 25 * 60 * 1000l;
-		minizinc.getConfig().solverTimeLimitMS = 5 * 60 * 1000L;
+		minizinc.getConfig().timeLimitMS = 2 * 60 * 60 * 1000l;
+		minizinc.getConfig().solverTimeLimitMS = 1 * 60 * 60 * 1000L;
 		minizinc.getConfig().gurobiParameterFile = resourceDirectory.resolve("minizinc").resolve("Gurobi.prm");
 		minizinc.getConfig().optimizeLevel = 1;
+		minizinc.getConfig().threads = 8;
 
 		minizinc.run(modelFile, dataFile, outputFolder).join();
 		((FileCodeLogger) minizinc.getConfig().logger).close();
 
 		var solutionOutputFile = ((DefaultFileLog) minizinc.getConfig().solverOutput).getPath();
 		if (Files.exists(solutionOutputFile))
-			processSoltions(solutionOutputFile, dataFile);
+			processSolution(solutionOutputFile, dataFile);
 	}
 
-	public static void main2(String[] args) throws IOException, InterruptedException {
-		Path dataFile = resourceDirectory.resolve("input").resolve("ihtc").resolve("i01.json");
-		String fileName = PathUtils.getFileNameWithoutExtension(dataFile);
-		Path outputFolder = resourceDirectory.resolve("out").resolve("workstation").resolve("out")
-				.resolve(fileName + "-05");
-		Path solutionFile = outputFolder.resolve("solution.json");
-
-		processSoltions(solutionFile, dataFile);
-	}
-
-	private static void processSoltions(Path solutionFile, Path dataFile) throws IOException, InterruptedException {
+	private static void processSolution(Path solutionFile, Path dataFile) throws IOException, InterruptedException {
 		var reader = new SolutionFileReader();
 		var solutions = reader.parseSolutionFile(solutionFile);
 
@@ -67,7 +61,7 @@ public class LocalRunner {
 			reader.writeToFile(best, file);
 
 			System.out.println(String.format("Validating file '%s' with solution '%s'", dataFile, file));
-			ValidatorRunner validator = new ValidatorRunner(resourceDirectory.resolve("IHTP_Validator_Win11.exe"),
+			ValidatorRunner validator = new ValidatorRunner(resourceDirectory.resolve("IHTP_Validator"),
 					solutionFile.getParent()) {
 
 			};
@@ -81,7 +75,27 @@ public class LocalRunner {
 								String.format("%d violations of type %s", violation.violations, violation.type));
 				}
 			} else {
-				System.out.println("All good!");
+				System.out.println("No violations found");
+
+				int maxNameLength = 0;
+				int maxCountLength = 0;
+				int maxWeightLength = 0;
+				int maxTotalLength = 0;
+
+				for (var cost : result.costs) {
+					maxNameLength = Math.max(maxNameLength, cost.name.length());
+					maxCountLength = Math.max(cost.occurences == 0 ? 0 : (int) (Math.log10(cost.occurences) + 1),
+							maxCountLength);
+					maxWeightLength = Math.max(cost.weight == 0 ? 0 : (int) (Math.log10(cost.weight) + 1),
+							maxWeightLength);
+					maxTotalLength = Math.max(cost.total == 0 ? 0 : (int) (Math.log10(cost.total) + 1), maxTotalLength);
+				}
+
+				String format = "%-" + maxNameLength + "s [%" + maxCountLength + "d x %" + maxWeightLength + "d] %"
+						+ maxTotalLength + "d";
+
+				for (var cost : result.costs)
+					System.out.println(String.format(format, cost.name, cost.occurences, cost.weight, cost.total));
 			}
 		}
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-miniZincDir="/opt/minizinc/MiniZincIDE-2.9.5-bundle-linux-x86_64"
+miniZincDir="/opt/minizinc/MiniZincIDE-2.10.0-bundle-linux-x86_64"
 modelFile="./model/v3/AllConstraints.mzn"
 
 OUTPUT_DIR="./out"

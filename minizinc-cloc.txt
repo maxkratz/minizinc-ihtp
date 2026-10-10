@@ -1,0 +1,5 @@
+MiniZinc
+    filter remove_matches ^\s*%
+    filter remove_inline %.*$
+    extension mzn
+    3rd_gen_scale 1.36
